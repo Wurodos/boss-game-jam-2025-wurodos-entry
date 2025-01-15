@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://yvfj7yurd0sw"]
+
+[ext_resource type="Script" path="res://script/battle/item.gd" id="1_uh8rr"]
+[ext_resource type="Texture2D" uid="uid://etx4k66fl43q" path="res://sprite/weapon/sai.svg" id="2_i1ukg"]
+
+[resource]
+script = ExtResource("1_uh8rr")
+name = "Saber"
+desc = "DEAL 5 DMG"
+type = 1
+sprite = ExtResource("2_i1ukg")
+effects = {
+"DMG": 5
+}

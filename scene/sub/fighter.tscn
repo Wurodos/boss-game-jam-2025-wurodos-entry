@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5fs4rxucekql"]
+
+[ext_resource type="Script" path="res://script/battle/fighter.gd" id="1_xa8mi"]
+[ext_resource type="Texture2D" uid="uid://d1c2s1kypncke" path="res://sprite/dudes/dude.png" id="1_yo5fk"]
+[ext_resource type="Texture2D" uid="uid://dulq3i0l42e30" path="res://sprite/hat/cap.svg" id="2_ms182"]
+[ext_resource type="Texture2D" uid="uid://cuefcls0sxvpr" path="res://sprite/trinket/die.svg" id="3_5bm0a"]
+[ext_resource type="Texture2D" uid="uid://etx4k66fl43q" path="res://sprite/weapon/sai.svg" id="4_547jk"]
+[ext_resource type="Texture2D" uid="uid://es646sa8xkuc" path="res://sprite/misc/target.svg" id="6_mdras"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abu2e"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d355d"]
+bg_color = Color(0.483612, 0.79215, 1.54018e-06, 1)
+
+[node name="Fighter" type="Node2D"]
+script = ExtResource("1_xa8mi")
+
+[node name="Dude" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_yo5fk")
+
+[node name="Hat" type="Sprite2D" parent="."]
+position = Vector2(4, -35)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_ms182")
+
+[node name="Trinket" type="Sprite2D" parent="."]
+position = Vector2(-34, 19)
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("3_5bm0a")
+
+[node name="Weapon" type="Sprite2D" parent="."]
+position = Vector2(57, -1)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("4_547jk")
+
+[node name="Health" type="ProgressBar" parent="."]
+offset_left = -47.0
+offset_top = 40.0
+offset_right = 48.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_abu2e")
+theme_override_styles/fill = SubResource("StyleBoxFlat_d355d")
+value = 37.0
+show_percentage = false
+
+[node name="Target" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.234375, 0.234375)
+texture = ExtResource("6_mdras")

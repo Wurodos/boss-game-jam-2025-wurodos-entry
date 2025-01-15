@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://ifaja42r1mia"]
+
+[ext_resource type="Script" path="res://script/battle/item.gd" id="1_7pmai"]
+[ext_resource type="Texture2D" uid="uid://dulq3i0l42e30" path="res://sprite/hat/cap.svg" id="2_kb36w"]
+
+[resource]
+script = ExtResource("1_7pmai")
+name = "Cap"
+desc = "+10 MAXHP"
+type = 0
+sprite = ExtResource("2_kb36w")
+effects = {
+"MAXHP": 10
+}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://oeb5wfjajm2s"]
+
+[ext_resource type="Script" path="res://script/battle/item.gd" id="1_4cc8n"]
+[ext_resource type="Texture2D" uid="uid://cuefcls0sxvpr" path="res://sprite/trinket/die.svg" id="2_s64jt"]
+
+[resource]
+script = ExtResource("1_4cc8n")
+name = "Die"
+desc = "+3 LUCK"
+type = 2
+sprite = ExtResource("2_s64jt")
+effects = {
+"LUCK": 3
+}

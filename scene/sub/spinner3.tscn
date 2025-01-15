@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5tq3kgndi2i7"]
+
+[ext_resource type="Texture2D" uid="uid://dwevf05pm6ogh" path="res://sprite/misc/itemspinner3.png" id="1_pjp1k"]
+[ext_resource type="Script" path="res://script/animation/spinner.gd" id="2_kc5of"]
+[ext_resource type="Texture2D" uid="uid://nshf5qd8me0o" path="res://sprite/misc/pointer.png" id="3_6yup0"]
+
+[node name="Spinner" type="Node2D"]
+z_index = 5
+
+[node name="Wheel" type="Sprite2D" parent="."]
+texture = ExtResource("1_pjp1k")
+script = ExtResource("2_kc5of")
+rotation_speed = 7
+segments = 3
+
+[node name="0" type="Node2D" parent="Wheel"]
+position = Vector2(-105, -43)
+
+[node name="1" type="Node2D" parent="Wheel"]
+position = Vector2(-21, 82)
+
+[node name="2" type="Node2D" parent="Wheel"]
+position = Vector2(50, -37)
+
+[node name="Pointer" type="Sprite2D" parent="."]
+position = Vector2(-1, -133)
+scale = Vector2(0.40625, 0.40625)
+texture = ExtResource("3_6yup0")

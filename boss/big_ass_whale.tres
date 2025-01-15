@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dlwdf4o8480cs"]
+
+[ext_resource type="Script" path="res://script/battle/boss/big_ass_whale.gd" id="1_7x4qe"]
+[ext_resource type="Texture2D" uid="uid://defxbkfiwr1tw" path="res://sprite/dudes/bigasswhale.png" id="2_o20qt"]
+
+[resource]
+script = ExtResource("1_7x4qe")
+name = "BIG ASS WHALE"
+health = 100
+sprite = ExtResource("2_o20qt")

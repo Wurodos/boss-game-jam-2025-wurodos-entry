@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bwt1w0qmnsk8g"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Button" type="Button" parent="."]
+offset_left = 392.0
+offset_top = 439.0
+offset_right = 740.0
+offset_bottom = 479.0
+text = "Start"

@@ -1,0 +1,131 @@
+[gd_scene load_steps=19 format=3 uid="uid://8sj26ko0nlg0"]
+
+[ext_resource type="Script" path="res://script/logic/global.gd" id="1_ddgi5"]
+[ext_resource type="Resource" uid="uid://dlwdf4o8480cs" path="res://boss/big_ass_whale.tres" id="2_nloc1"]
+[ext_resource type="Texture2D" uid="uid://d25pwk4ygq5kf" path="res://sprite/misc/background.jpg" id="2_ve3mn"]
+[ext_resource type="Texture2D" uid="uid://bmequi6p5uatu" path="res://sprite/misc/fighterpodium.png" id="3_e3y4e"]
+[ext_resource type="Texture2D" uid="uid://defxbkfiwr1tw" path="res://sprite/dudes/bigasswhale.png" id="3_p4b6c"]
+[ext_resource type="AudioStream" uid="uid://c7krc1behjfp" path="res://music/Aggressor.mp3" id="3_t05dh"]
+[ext_resource type="Script" path="res://script/battle/item.gd" id="3_tm17c"]
+[ext_resource type="Resource" uid="uid://yvfj7yurd0sw" path="res://item/weapon/saber.tres" id="4_dgxki"]
+[ext_resource type="Resource" uid="uid://ifaja42r1mia" path="res://item/hat/cap.tres" id="5_md4fs"]
+[ext_resource type="FontFile" uid="uid://c5isqdwnvpkrs" path="res://font/Corvid Conspirator v1.1.ttf" id="5_w1etl"]
+[ext_resource type="Script" path="res://script/battle/spinner_mng.gd" id="6_2mqhm"]
+[ext_resource type="Resource" uid="uid://oeb5wfjajm2s" path="res://item/trinket/die.tres" id="6_6r24y"]
+[ext_resource type="FontFile" uid="uid://cnivmtyhhi2dd" path="res://font/Counting Apples.ttf" id="9_n11rl"]
+[ext_resource type="Script" path="res://script/battle/damage_timer.gd" id="10_rxxv1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkoj2"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sylg2"]
+bg_color = Color(1, 0.307718, 0.480504, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_khxmi"]
+font = ExtResource("5_w1etl")
+font_size = 50
+font_color = Color(1, 0.277427, 0.994421, 1)
+outline_size = 32
+outline_color = Color(0.256261, 0.00262108, 0.268149, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tshj1"]
+font = ExtResource("9_n11rl")
+font_size = 48
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_ddgi5")
+boss = ExtResource("2_nloc1")
+item_pool = Array[ExtResource("3_tm17c")]([ExtResource("4_dgxki"), ExtResource("5_md4fs"), ExtResource("6_6r24y")])
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_t05dh")
+autoplay = true
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.381703, 0.381703, 0.381703, 1)
+position = Vector2(595, 328)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_ve3mn")
+
+[node name="Fighterpodium" type="Sprite2D" parent="."]
+self_modulate = Color(0.509286, 0.509286, 0.509286, 1)
+position = Vector2(454, 465)
+texture = ExtResource("3_e3y4e")
+
+[node name="Boss" type="Sprite2D" parent="."]
+position = Vector2(576.333, 321.5)
+scale = Vector2(1.43333, 1.43333)
+texture = ExtResource("3_p4b6c")
+
+[node name="FighterCircle" type="Node2D" parent="."]
+position = Vector2(-125, 50)
+script = ExtResource("6_2mqhm")
+top_pos = Vector2(579, 323)
+right_pos = Vector2(685, 449)
+left_pos = Vector2(468, 450)
+
+[node name="SpinnerParent" type="Node" parent="FighterCircle"]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 25.0
+offset_right = 877.0
+offset_bottom = 85.0
+
+[node name="Bar" type="ProgressBar" parent="UI/Health"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 7.0
+offset_right = 556.0
+offset_bottom = 54.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fkoj2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_sylg2")
+value = 50.0
+show_percentage = false
+
+[node name="Bossname" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 367.0
+offset_top = 82.0
+offset_right = 811.0
+offset_bottom = 159.0
+text = "BIG ASS WHALE"
+label_settings = SubResource("LabelSettings_khxmi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Speed" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 271.0
+offset_top = 589.0
+offset_right = 895.0
+offset_bottom = 640.0
+text = "Speed test"
+label_settings = SubResource("LabelSettings_tshj1")
+horizontal_alignment = 1
+script = ExtResource("10_rxxv1")
+strings = Array[String](["Ultra Fast!", "Quick Horse!", "Rapid Strike", "Sitting Down", "Contemplating..."])
+
+[node name="Timer" type="Timer" parent="UI/Speed"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Darken" type="ColorRect" parent="UI"]
+visible = false
+layout_mode = 0
+offset_right = 1171.0
+offset_bottom = 669.0
+color = Color(0, 0, 0, 0.505882)
+
+[connection signal="darken" from="FighterCircle" to="." method="darken"]
+[connection signal="end_turn" from="FighterCircle" to="." method="boss_turn"]
+[connection signal="spin" from="FighterCircle" to="." method="rotate_fighters"]
+[connection signal="undarken" from="FighterCircle" to="." method="undarken"]
+[connection signal="timeout" from="UI/Speed/Timer" to="UI/Speed" method="decrease"]
