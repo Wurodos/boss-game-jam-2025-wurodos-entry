@@ -1,10 +1,21 @@
-[gd_scene format=3 uid="uid://bwt1w0qmnsk8g"]
+[gd_scene load_steps=2 format=3 uid="uid://bwt1w0qmnsk8g"]
+
+[ext_resource type="Script" path="res://script/logic/main_menu.gd" id="1_1idn7"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_1idn7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1176.0
+offset_bottom = 665.0
+color = Color(0.595592, 0.000259906, 0.595587, 1)
 
 [node name="Button" type="Button" parent="."]
-offset_left = 392.0
-offset_top = 439.0
-offset_right = 740.0
-offset_bottom = 479.0
-text = "Start"
+offset_left = 315.0
+offset_top = 279.0
+offset_right = 881.0
+offset_bottom = 392.0
+theme_override_font_sizes/font_size = 44
+text = "DOWNLOAD"
+
+[connection signal="pressed" from="Button" to="." method="go_to_draft"]

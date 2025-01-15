@@ -28,6 +28,7 @@ enum Position{TOP, RIGHT, LEFT}
 
 func add_fighter(fighter : Fighter) -> void:
 	fighter.dead.connect(fighter_killed)
+	fighter.reparent(self)
 	if top_fighter == null:
 		top_fighter = fighter
 		top_fighter.position_id = Position.TOP
@@ -40,17 +41,16 @@ func add_fighter(fighter : Fighter) -> void:
 		left_fighter = fighter
 		left_fighter.position_id = Position.LEFT
 		fighter.position = left_pos
-	add_child(fighter)
+	dude_num += 1
+	
+
+var dude_num = 0
+signal dudes_are_dead
 
 func fighter_killed(position_id : Position) -> void:
-	print(position_id)
-	match(position_id):
-		Position.TOP:
-			pass
-		Position.RIGHT:
-			pass
-		Position.LEFT:
-			pass
+	dude_num -= 1
+	if dude_num == 0:
+		dudes_are_dead.emit()
 
 func fighter_chosen(fighter : Fighter) -> void:
 	if fighter.selected: return
@@ -67,10 +67,10 @@ func fighter_chosen(fighter : Fighter) -> void:
 	for item in items:
 		if item.effects.has("DMG"):
 			actions.append(Action.new(get_parent().deal_dmg,\
-			item.effects["DMG"], null, dmg_icon))
+			item.effects["DMG"], fighter, dmg_icon))
 		
 	if segment_n < 1: 
-		actions.append(Action.new(get_parent().deal_dmg, 2, null, dmg_icon))
+		actions.append(Action.new(get_parent().deal_dmg, 2, fighter, dmg_icon))
 		segment_n += 1
 	if segment_n < 2:
 		actions.append(Action.new(get_parent().heal, 2, fighter, heal_icon))

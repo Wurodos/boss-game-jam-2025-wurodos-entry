@@ -11,6 +11,7 @@ var trinket : Item
 var max_hp : int
 var hp : int
 var defence : int
+var luck : int
 
 var selected : bool
 
@@ -27,6 +28,7 @@ func _init() -> void:
 	selected = false
 	max_hp = 20
 	defence = 0
+	luck = 0
 	hp = max_hp
 	alive = true
 
@@ -36,6 +38,9 @@ func visualise() -> void:
 	$Trinket.texture = trinket.sprite
 	$Health.max_value = max_hp
 	$Health.value = hp
+	if luck > 0:
+		$LuckText.visible = true
+		$LuckText.text = str(luck)
 
 func equip(item : Item) -> void:
 	match item.type:
@@ -45,6 +50,8 @@ func equip(item : Item) -> void:
 	if item.effects.has("MAXHP"):
 		max_hp += item.effects["MAXHP"]
 		hp = max_hp
+	if item.effects.has("LUCK"):
+		luck += item.effects["LUCK"]
 
 func get_all_items() -> Array[Item]:
 	var item_array : Array[Item]
@@ -71,8 +78,12 @@ func change_hp(delta : int) -> void:
 	hp += delta
 	if hp > max_hp: hp = max_hp
 	$Health.value = hp
-	if hp <= 0:
+	if hp <= 0 and alive:
 		die()
+
+func draft_mode() -> Button:
+	$Draft.visible = true
+	return $Draft
 
 func die() -> void:
 	alive = false

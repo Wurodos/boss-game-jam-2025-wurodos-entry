@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://tvs2nw7vpuku"]
+
+[ext_resource type="FontFile" uid="uid://cnivmtyhhi2dd" path="res://font/Counting Apples.ttf" id="1_h0c6o"]
+
+[resource]
+font = ExtResource("1_h0c6o")
+font_size = 12
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)

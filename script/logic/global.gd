@@ -30,16 +30,25 @@ class Action:
 
 var player_team : Array[Fighter]
 @export var boss : Boss
-@export var item_pool : Array[Item]
 
-func deal_dmg(dmg : int, _fighter = null):
-	print("Dealt " + str(dmg) + " dmg to boss!")
+
+func deal_dmg(dmg : int, fighter : Fighter):
 	#TODO Animation
 	if $UI/Speed.damage_multiplier > 0: dmg *= $UI/Speed.damage_multiplier
 	else : dmg /= 2
+	var r = randi_range(0, 99)
+	if r < 4 + fighter.luck * 4:
+		print("Crit!")
+		dmg += dmg / 2
 	boss.health -= dmg
+	print("Dealt " + str(dmg) + " dmg to boss!")
 	$UI/Health/Bar.value = boss.health
 	
+	if boss.health <= 0:
+		boss_defeated()
+
+func boss_defeated():
+	$Boss/AnimationPlayer.play("fade")
 
 func heal(amount : int, fighter : Fighter):
 	print("Healed " + str(amount) + "!")
@@ -61,18 +70,20 @@ func rotate_fighters(clockwise : bool):
 		player_team[1] = player_team[0]
 		player_team[0] = temp
 		
+		var temp_vis = player_team[0].target_visible
 		player_team[0].toggle_target(player_team[1].target_visible)
 		player_team[1].toggle_target(player_team[2].target_visible)
-		temp.toggle_target(player_team[0].target_visible)
+		player_team[2].toggle_target(temp_vis)
 	else:
 		var temp = player_team[0]
 		player_team[0] = player_team[1]
 		player_team[1] = player_team[2]
 		player_team[2] = temp
 		
+		var temp_vis = player_team[2].target_visible
 		player_team[2].toggle_target(player_team[1].target_visible)
 		player_team[1].toggle_target(player_team[0].target_visible)
-		temp.toggle_target(player_team[2].target_visible)
+		player_team[0].toggle_target(temp_vis)
 		
 
 # BOSS
@@ -95,11 +106,11 @@ func boss_turn():
 
 # TESTING TESTING
 func _ready() -> void:
-	player_team.append(fighter_prefab.instantiate())
-	player_team.append(fighter_prefab.instantiate())
-	player_team.append(fighter_prefab.instantiate())
+	for fighter in Heaven.drafted:
+		player_team.append(fighter)
+		fighter.visible = true
+		fighter.get_node("Draft").visible = false
 	
-	player_team[0].equip(item_pool[0].clone())
 	start_battle()
 
 func start_battle() -> void:
@@ -124,3 +135,12 @@ func darken() -> void:
 
 func undarken() -> void:
 	$UI/Darken.visible = false
+
+# Lose
+func _on_dudes_are_dead() -> void:
+	$MusicPlayer.queue_free()
+	$UI/LoseScreen.visible = true
+	$UI/LoseScreen/AnimationPlayer.play("fade")
+
+func exit() -> void:
+	get_tree().quit()

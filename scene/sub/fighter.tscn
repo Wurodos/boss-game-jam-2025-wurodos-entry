@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5fs4rxucekql"]
+[gd_scene load_steps=11 format=3 uid="uid://c5fs4rxucekql"]
 
 [ext_resource type="Script" path="res://script/battle/fighter.gd" id="1_xa8mi"]
 [ext_resource type="Texture2D" uid="uid://d1c2s1kypncke" path="res://sprite/dudes/dude.png" id="1_yo5fk"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cuefcls0sxvpr" path="res://sprite/trinket/die.svg" id="3_5bm0a"]
 [ext_resource type="Texture2D" uid="uid://etx4k66fl43q" path="res://sprite/weapon/sai.svg" id="4_547jk"]
 [ext_resource type="Texture2D" uid="uid://es646sa8xkuc" path="res://sprite/misc/target.svg" id="6_mdras"]
+[ext_resource type="Texture2D" uid="uid://cg2bw7q2t6bjk" path="res://sprite/icon/clover.svg" id="7_ia1q6"]
+[ext_resource type="LabelSettings" uid="uid://tvs2nw7vpuku" path="res://scene/small_text.tres" id="8_qjecr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abu2e"]
 bg_color = Color(0, 0, 0, 1)
@@ -49,3 +51,27 @@ show_percentage = false
 visible = false
 scale = Vector2(0.234375, 0.234375)
 texture = ExtResource("6_mdras")
+
+[node name="Draft" type="Button" parent="."]
+visible = false
+offset_left = -60.0
+offset_top = -68.0
+offset_right = 59.0
+offset_bottom = 53.0
+
+[node name="LuckText" type="Label" parent="."]
+visible = false
+offset_left = -82.0
+offset_top = -56.0
+offset_right = -21.0
+offset_bottom = -20.0
+text = "37"
+label_settings = ExtResource("8_qjecr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Luck" type="Sprite2D" parent="LuckText"]
+show_behind_parent = true
+position = Vector2(30, 18)
+scale = Vector2(0.0673828, 0.0673828)
+texture = ExtResource("7_ia1q6")

@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://bhg4xqj8kn1lr"]
+
+[ext_resource type="Script" path="res://script/logic/draft.gd" id="1_hbpyg"]
+[ext_resource type="PackedScene" uid="uid://c5fs4rxucekql" path="res://scene/sub/fighter.tscn" id="1_sdiwm"]
+[ext_resource type="FontFile" uid="uid://cnivmtyhhi2dd" path="res://font/Counting Apples.ttf" id="2_c0d0s"]
+[ext_resource type="Script" path="res://script/battle/item.gd" id="2_jj7yd"]
+[ext_resource type="Resource" uid="uid://ifaja42r1mia" path="res://item/hat/cap.tres" id="3_uj8gh"]
+[ext_resource type="Resource" uid="uid://oeb5wfjajm2s" path="res://item/trinket/die.tres" id="4_nh0j5"]
+[ext_resource type="Resource" uid="uid://yvfj7yurd0sw" path="res://item/weapon/saber.tres" id="5_jcih0"]
+[ext_resource type="Texture2D" uid="uid://sni84jny8qwf" path="res://sprite/misc/russian.jpg" id="8_e53ou"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o2bwm"]
+font = ExtResource("2_c0d0s")
+font_size = 48
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Draft" type="Node2D"]
+script = ExtResource("1_hbpyg")
+weapon_pool = Array[ExtResource("2_jj7yd")]([ExtResource("5_jcih0")])
+hat_pool = Array[ExtResource("2_jj7yd")]([ExtResource("3_uj8gh")])
+trinket_pool = Array[ExtResource("2_jj7yd")]([ExtResource("4_nh0j5")])
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.226707, 0.226707, 0.226707, 1)
+offset_left = -82.0
+offset_top = -21.0
+offset_right = 1257.0
+offset_bottom = 658.0
+texture = ExtResource("8_e53ou")
+
+[node name="FighterParent" type="Node" parent="."]
+
+[node name="Fighter5" parent="FighterParent" instance=ExtResource("1_sdiwm")]
+position = Vector2(954, 228)
+
+[node name="Fighter4" parent="FighterParent" instance=ExtResource("1_sdiwm")]
+position = Vector2(223, 254)
+
+[node name="Fighter3" parent="FighterParent" instance=ExtResource("1_sdiwm")]
+position = Vector2(365, 528)
+
+[node name="Fighter2" parent="FighterParent" instance=ExtResource("1_sdiwm")]
+position = Vector2(764, 521)
+
+[node name="Fighter" parent="FighterParent" instance=ExtResource("1_sdiwm")]
+position = Vector2(549, 101)
+
+[node name="Label" type="Label" parent="."]
+z_index = 50
+offset_left = 293.0
+offset_top = 279.0
+offset_right = 917.0
+offset_bottom = 407.0
+text = "Choose 3 fighters
+to lead you into battle!"
+label_settings = SubResource("LabelSettings_o2bwm")
+horizontal_alignment = 1
+vertical_alignment = 1

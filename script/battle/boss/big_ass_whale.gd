@@ -10,7 +10,10 @@ func decide_targets(team : Array[Fighter]):
 			fighter.toggle_target(true)
 		pending_move = test_splash
 	else:
-		team[0].toggle_target(true)
+		for fighter in team:
+			if fighter.alive:
+				fighter.toggle_target(true)
+				break
 		pending_move = test_single
 
 func test_splash(team : Array[Fighter]):
