@@ -29,8 +29,9 @@ class Action:
 
 
 var player_team : Array[Fighter]
-@export var boss : Boss
-
+@export var boss_pool : Array[Boss]
+var boss : Boss
+var boss_id = 0
 
 func deal_dmg(dmg : int, fighter : Fighter):
 	#TODO Animation
@@ -49,6 +50,17 @@ func deal_dmg(dmg : int, fighter : Fighter):
 
 func boss_defeated():
 	$Boss/AnimationPlayer.play("fade")
+
+var is_helpless = true
+
+func on_fade_finished(anim_name : StringName):
+	if anim_name == "fade":
+		if is_helpless: 
+			$Boss/AnimationPlayer.play_backwards("fade")
+			boss_id += 1
+			if boss_id == boss_pool.size(): win()
+			else: start_battle(boss_id)
+		is_helpless = !is_helpless
 
 func heal(amount : int, fighter : Fighter):
 	print("Healed " + str(amount) + "!")
@@ -111,10 +123,12 @@ func _ready() -> void:
 		fighter.visible = true
 		fighter.get_node("Draft").visible = false
 	
-	start_battle()
-
-func start_battle() -> void:
 	visualise_fighters()
+	start_battle(0)
+
+func start_battle(boss_id : int) -> void:
+	boss = boss_pool[boss_id]
+	
 	visualise_boss()
 	decide_targets()
 	$UI/Speed.start_timer()
@@ -141,6 +155,12 @@ func _on_dudes_are_dead() -> void:
 	$MusicPlayer.queue_free()
 	$UI/LoseScreen.visible = true
 	$UI/LoseScreen/AnimationPlayer.play("fade")
+
+
+func win() -> void:
+	$MusicPlayer.queue_free()
+	$UI/WinScreen.visible = true
+	$UI/WinScreen/AnimationPlayer.play("fade")
 
 func exit() -> void:
 	get_tree().quit()

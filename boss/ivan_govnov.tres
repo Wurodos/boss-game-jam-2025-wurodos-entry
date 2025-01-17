@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://1j5fovtvdg7t"]
+
+[ext_resource type="Script" path="res://script/battle/boss/ivan_govnov.gd" id="1_6tkx8"]
+[ext_resource type="Texture2D" uid="uid://cfefbm1tm6gg7" path="res://sprite/dudes/ivangovnov.png" id="2_urr0g"]
+
+[resource]
+script = ExtResource("1_6tkx8")
+name = "IVAN GOVNOV"
+health = 500
+sprite = ExtResource("2_urr0g")

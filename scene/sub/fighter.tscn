@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c5fs4rxucekql"]
+[gd_scene load_steps=17 format=3 uid="uid://c5fs4rxucekql"]
 
 [ext_resource type="Script" path="res://script/battle/fighter.gd" id="1_xa8mi"]
 [ext_resource type="Texture2D" uid="uid://d1c2s1kypncke" path="res://sprite/dudes/dude.png" id="1_yo5fk"]
@@ -8,12 +8,52 @@
 [ext_resource type="Texture2D" uid="uid://es646sa8xkuc" path="res://sprite/misc/target.svg" id="6_mdras"]
 [ext_resource type="Texture2D" uid="uid://cg2bw7q2t6bjk" path="res://sprite/icon/clover.svg" id="7_ia1q6"]
 [ext_resource type="LabelSettings" uid="uid://tvs2nw7vpuku" path="res://scene/small_text.tres" id="8_qjecr"]
+[ext_resource type="Texture2D" uid="uid://dkfbnf0n67j15" path="res://sprite/icon/poison-cloud.svg" id="9_icv0o"]
+[ext_resource type="Texture2D" uid="uid://baoj6jgwqaqf4" path="res://sprite/icon/star-swirl.svg" id="10_hkmco"]
+[ext_resource type="LabelSettings" uid="uid://b067mcbswlb2n" path="res://scene/dmg_label.tres" id="11_1k6u0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abu2e"]
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d355d"]
 bg_color = Color(0.483612, 0.79215, 1.54018e-06, 1)
+
+[sub_resource type="Animation" id="Animation_fcjmj"]
+resource_name = "drop"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667, 0.233333, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-19, 30), Vector2(-15, 15), Vector2(-10, 5), Vector2(0, 0), Vector2(10, -2), Vector2(20, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_pl3x4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-19, 30)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uars2"]
+_data = {
+"RESET": SubResource("Animation_pl3x4"),
+"drop": SubResource("Animation_fcjmj")
+}
 
 [node name="Fighter" type="Node2D"]
 script = ExtResource("1_xa8mi")
@@ -75,3 +115,44 @@ show_behind_parent = true
 position = Vector2(30, 18)
 scale = Vector2(0.0673828, 0.0673828)
 texture = ExtResource("7_ia1q6")
+
+[node name="PoisonText" type="Label" parent="."]
+visible = false
+offset_left = -30.0
+offset_top = 51.0
+offset_right = 31.0
+offset_bottom = 87.0
+text = "37"
+label_settings = ExtResource("8_qjecr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Poison" type="Sprite2D" parent="PoisonText"]
+show_behind_parent = true
+position = Vector2(30, 16)
+scale = Vector2(0.0673828, 0.0673828)
+texture = ExtResource("9_icv0o")
+
+[node name="Stun" type="Sprite2D" parent="."]
+visible = false
+show_behind_parent = true
+z_index = 1
+position = Vector2(43, 45)
+scale = Vector2(0.0673828, 0.0673828)
+texture = ExtResource("10_hkmco")
+
+[node name="Damage" type="Label" parent="."]
+visible = false
+offset_left = -19.0
+offset_top = 30.0
+offset_right = 21.0
+offset_bottom = 54.0
+text = "23"
+label_settings = ExtResource("11_1k6u0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Damage"]
+libraries = {
+"": SubResource("AnimationLibrary_uars2")
+}

@@ -116,13 +116,13 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("spin_counter"):
 		if not any_spinners: spin_anticlockwise()
 	elif event.is_action_pressed("choose_top"):
-		if top_fighter.alive:
+		if top_fighter.alive and not top_fighter.stunned:
 			fighter_chosen(top_fighter)
 	elif event.is_action_pressed("choose_right"):
-		if right_fighter.alive:
+		if right_fighter.alive and not right_fighter.stunned:
 			fighter_chosen(right_fighter)
 	elif event.is_action_pressed("choose_left"):
-		if left_fighter.alive:
+		if left_fighter.alive and not left_fighter.stunned:
 			fighter_chosen(left_fighter)
 	elif event.is_action_pressed("confirm"):
 		if any_spinners:

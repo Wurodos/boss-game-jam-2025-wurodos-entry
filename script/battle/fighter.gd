@@ -15,6 +15,9 @@ var luck : int
 
 var selected : bool
 
+var poison : int
+var stunned : bool
+
 var alive : bool
 
 var position_id : POSITION_ID
@@ -29,8 +32,11 @@ func _init() -> void:
 	max_hp = 20
 	defence = 0
 	luck = 0
+	poison = 0
+	stunned = false
 	hp = max_hp
 	alive = true
+	
 
 func visualise() -> void:
 	$Hat.texture = hat.sprite
@@ -38,6 +44,7 @@ func visualise() -> void:
 	$Trinket.texture = trinket.sprite
 	$Health.max_value = max_hp
 	$Health.value = hp
+	$Damage/AnimationPlayer.animation_finished.connect(hide_dmg)
 	if luck > 0:
 		$LuckText.visible = true
 		$LuckText.text = str(luck)
@@ -74,12 +81,40 @@ func toggle_target(state : bool) -> void:
 	$Target.visible = state
 	target_visible = state
 
+func hide_dmg(anim_name : StringName) -> void:
+	if anim_name == "drop":
+		$Damage.visible = false
+		$Damage/AnimationPlayer.play("RESET")	
+
 func change_hp(delta : int) -> void:
+	
+	if delta < 0:
+		$Damage.label_settings.font_color = Color.RED
+		$Damage.text = str(-delta)
+		$Damage.visible = true
+		$Damage/AnimationPlayer.play("drop")
+	else:
+		$Damage.label_settings.font_color = Color.GREEN
+		$Damage.text = str(delta)
+		$Damage.visible = true
+		$Damage/AnimationPlayer.play("drop")
+	
 	hp += delta
 	if hp > max_hp: hp = max_hp
 	$Health.value = hp
 	if hp <= 0 and alive:
 		die()
+
+func apply_poison(psn : int) -> void:
+	poison += psn
+	if poison > 0:
+		$PoisonText.text = str(poison)
+		$PoisonText.visible = true
+	else: $PoisonText.visible = false
+
+func apply_stun() -> void:
+	stunned = true
+	$Stun.visible = true
 
 func draft_mode() -> Button:
 	$Draft.visible = true

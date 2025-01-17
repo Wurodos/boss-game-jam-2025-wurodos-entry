@@ -1,30 +1,17 @@
-[gd_scene load_steps=21 format=3 uid="uid://8sj26ko0nlg0"]
+[gd_scene load_steps=23 format=3 uid="uid://8sj26ko0nlg0"]
 
 [ext_resource type="Script" path="res://script/logic/global.gd" id="1_ddgi5"]
 [ext_resource type="Resource" uid="uid://dlwdf4o8480cs" path="res://boss/big_ass_whale.tres" id="2_nloc1"]
 [ext_resource type="Texture2D" uid="uid://d25pwk4ygq5kf" path="res://sprite/misc/background.jpg" id="2_ve3mn"]
+[ext_resource type="Script" path="res://script/battle/boss.gd" id="2_yu3rp"]
 [ext_resource type="Texture2D" uid="uid://bmequi6p5uatu" path="res://sprite/misc/fighterpodium.png" id="3_e3y4e"]
 [ext_resource type="Texture2D" uid="uid://defxbkfiwr1tw" path="res://sprite/dudes/bigasswhale.png" id="3_p4b6c"]
 [ext_resource type="AudioStream" uid="uid://c7krc1behjfp" path="res://music/Aggressor.mp3" id="3_t05dh"]
+[ext_resource type="Resource" uid="uid://1j5fovtvdg7t" path="res://boss/ivan_govnov.tres" id="4_gjfbm"]
 [ext_resource type="FontFile" uid="uid://c5isqdwnvpkrs" path="res://font/Corvid Conspirator v1.1.ttf" id="5_w1etl"]
 [ext_resource type="Script" path="res://script/battle/spinner_mng.gd" id="6_2mqhm"]
 [ext_resource type="FontFile" uid="uid://cnivmtyhhi2dd" path="res://font/Counting Apples.ttf" id="9_n11rl"]
 [ext_resource type="Script" path="res://script/battle/damage_timer.gd" id="10_rxxv1"]
-
-[sub_resource type="Animation" id="Animation_fnyu4"]
-resource_name = "fade"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_x30se"]
 length = 0.001
@@ -39,6 +26,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fnyu4"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r0b4o"]
@@ -64,21 +66,6 @@ outline_color = Color(0.256261, 0.00262108, 0.268149, 1)
 font = ExtResource("9_n11rl")
 font_size = 48
 
-[sub_resource type="Animation" id="Animation_6bqrn"]
-resource_name = "fade"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.933333),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_ua0tk"]
 length = 0.001
 tracks/0/type = "value"
@@ -94,6 +81,21 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_6bqrn"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(1, 0, 0, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vd6gf"]
 _data = {
 "RESET": SubResource("Animation_ua0tk"),
@@ -102,7 +104,7 @@ _data = {
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ddgi5")
-boss = ExtResource("2_nloc1")
+boss_pool = Array[ExtResource("2_yu3rp")]([ExtResource("2_nloc1"), ExtResource("4_gjfbm")])
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_t05dh")
@@ -217,6 +219,29 @@ offset_bottom = 413.0
 theme_override_font_sizes/font_size = 100
 text = "PURGE"
 
+[node name="WinScreen" type="ColorRect" parent="UI"]
+visible = false
+layout_mode = 0
+offset_right = 1164.0
+offset_bottom = 651.0
+color = Color(0, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/WinScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_vd6gf")
+}
+
+[node name="Button" type="Button" parent="UI/WinScreen"]
+self_modulate = Color(1, 1, 0, 1)
+layout_mode = 0
+offset_left = 198.0
+offset_top = 217.0
+offset_right = 966.0
+offset_bottom = 413.0
+theme_override_font_sizes/font_size = 100
+text = "ASCEND!!!"
+
+[connection signal="animation_finished" from="Boss/AnimationPlayer" to="." method="on_fade_finished"]
 [connection signal="darken" from="FighterCircle" to="." method="darken"]
 [connection signal="dudes_are_dead" from="FighterCircle" to="." method="_on_dudes_are_dead"]
 [connection signal="end_turn" from="FighterCircle" to="." method="boss_turn"]
@@ -224,3 +249,4 @@ text = "PURGE"
 [connection signal="undarken" from="FighterCircle" to="." method="undarken"]
 [connection signal="timeout" from="UI/Speed/Timer" to="UI/Speed" method="decrease"]
 [connection signal="pressed" from="UI/LoseScreen/Button" to="." method="exit"]
+[connection signal="pressed" from="UI/WinScreen/Button" to="." method="exit"]

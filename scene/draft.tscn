@@ -53,7 +53,7 @@ offset_top = 279.0
 offset_right = 917.0
 offset_bottom = 407.0
 text = "Choose 3 fighters
-to lead you into battle!"
+to assist you!"
 label_settings = SubResource("LabelSettings_o2bwm")
 horizontal_alignment = 1
 vertical_alignment = 1
